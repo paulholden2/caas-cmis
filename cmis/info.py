@@ -1,11 +1,12 @@
+##
+# info
+#
+# Connect to a CMIS server and print some basic info about the repository
+##
+
 import util
-from argvard import Command
 
-info = Command()
-
-@info.option('--config config')
-def info_config(context, config):
-    context['config'] = config
+info = util.create_command()
 
 @info.main()
 def info_main(context):

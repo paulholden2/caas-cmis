@@ -3,7 +3,10 @@
 import cmis
 from argvard import Argvard
 
+# Create Argvard app
 app = Argvard()
+
+# Register CMIS commands
 app.register_command('info', cmis.info)
 
 if __name__ == '__main__':
