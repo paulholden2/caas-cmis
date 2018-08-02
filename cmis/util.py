@@ -53,7 +53,7 @@ def create_command():
     def cmd_password(context, password):
         context['password'] = password
 
-    # Allow user to specify a password
+    # Allow user to specify a binding
     @cmd.option('--binding binding')
     def cmd_binding(context, binding):
         context['binding'] = binding
