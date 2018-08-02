@@ -58,4 +58,10 @@ def create_command():
     def cmd_binding(context, binding):
         context['binding'] = binding
 
+    # Add descriptions for standard options
+    cmd.options['--hostname'].description = 'Hostname of the CMIS service endpoint'
+    cmd.options['--username'].description = 'Username to connect to the CMIS server as'
+    cmd.options['--password'].description = 'Password to authenticate with'
+    cmd.options['--binding'].description = 'The API binding to use. Supported values: atompub, browser'
+
     return cmd
