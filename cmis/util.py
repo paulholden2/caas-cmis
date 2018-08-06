@@ -30,7 +30,7 @@ def create_client(context):
     client = CmisClient(hostname, username, password, binding=adapter)
 
     if hostname.startswith('https'):
-        binding.ssl = true
+        binding.ssl = True
 
     return client
 
