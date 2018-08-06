@@ -27,7 +27,12 @@ def create_client(context):
     else:
         raise Exception('Unknown binding type: ' + binding)
 
-    return CmisClient(hostname, username, password, binding=adapter)
+    client = CmisClient(hostname, username, password, binding=adapter)
+
+    if hostname.startswith('https'):
+        binding.ssl = true
+
+    return client
 
 # Create an Argvard command with standard options
 def create_command():
