@@ -116,7 +116,7 @@ class AtomPubBinding(Binding):
         if len(self.extArgs) > 0:
             kwargs.update(self.extArgs)
 
-        resp, content = Rest().get(url,
+        resp, content = Rest(self.ssl).get(url,
                                    username=username,
                                    password=password,
                                    **kwargs)
@@ -168,7 +168,7 @@ class AtomPubBinding(Binding):
         if len(self.extArgs) > 0:
             kwargs.update(self.extArgs)
 
-        resp, content = Rest().post(url,
+        resp, content = Rest(self.ssl).post(url,
                                     payload,
                                     contentType,
                                     username=username,
@@ -2533,7 +2533,7 @@ class AtomPubDocument(AtomPubCmisObject):
             srcUrl = contentElements[0].attributes['src'].value
 
             # the cmis client class parses non-error responses
-            result, content = Rest().get(srcUrl.encode('utf-8'),
+            result, content = Rest(self.ssl).get(srcUrl.encode('utf-8'),
                                          username=self._cmisClient.username,
                                          password=self._cmisClient.password,
                                          **self._cmisClient.extArgs)

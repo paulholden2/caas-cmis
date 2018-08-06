@@ -70,7 +70,7 @@ class BrowserBinding(Binding):
         if len(self.extArgs) > 0:
             kwargs.update(self.extArgs)
 
-        resp, content = Rest().get(url,
+        resp, content = Rest(self.ssl).get(url,
                                    username=username,
                                    password=password,
                                    **kwargs)
@@ -1926,7 +1926,7 @@ class BrowserDocument(BrowserCmisObject):
             return None
 
         contentUrl = self._repository.getRootFolderUrl() + "?objectId=" + self.getObjectId() + "&selector=content"
-        result, content = Rest().get(contentUrl.encode('utf-8'),
+        result, content = Rest(self.ssl).get(contentUrl.encode('utf-8'),
                                      self._cmisClient.username,
                                      self._cmisClient.password,
                                      **self._cmisClient.extArgs)
@@ -2005,7 +2005,7 @@ class BrowserDocument(BrowserCmisObject):
         renditions = []
 
         contentUrl = self._repository.getRootFolderUrl() + "?objectId=" + self.getObjectId() + "&cmisselector=renditions&renditionFilter=*"
-        result, content = Rest().get(contentUrl.encode('utf-8'),
+        result, content = Rest(self.ssl).get(contentUrl.encode('utf-8'),
                                      self._cmisClient.username,
                                      self._cmisClient.password,
                                      **self._cmisClient.extArgs)

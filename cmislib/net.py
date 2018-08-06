@@ -35,7 +35,8 @@ class RESTService(object):
     such as the USER_AGENT and builds the basic auth handler.
     """
 
-    def __init__(self):
+    def __init__(self, ssl=False):
+        self.ssl = ssl
         self.user_agent = 'cmislib/%s +http://chemistry.apache.org/'
         self.logger = logging.getLogger('cmislib.net.RESTService')
 
@@ -46,6 +47,9 @@ class RESTService(object):
             **kwargs):
 
         """ Makes a get request to the URL specified."""
+
+        if self.ssl:
+            url = url.replace('http:', 'https:')
 
         headers = {}
         if kwargs:
@@ -69,6 +73,9 @@ class RESTService(object):
     def delete(self, url, username=None, password=None, **kwargs):
 
         """ Makes a delete request to the URL specified. """
+
+        if self.ssl:
+            url = url.replace('http:', 'https:')
 
         headers = {}
         if kwargs:
@@ -103,6 +110,9 @@ class RESTService(object):
         specified content type.
         """
 
+        if self.ssl:
+            url = url.replace('http:', 'https:')
+
         headers = {}
         if kwargs:
             if 'headers' in kwargs:
@@ -136,6 +146,9 @@ class RESTService(object):
         that gets passed in. The content type header gets set to the
         specified content type.
         """
+
+        if self.ssl:
+            url = url.replace('http:', 'https:')
 
         headers = {}
         if kwargs:
