@@ -8,6 +8,7 @@ app = Argvard()
 
 # Register CMIS commands
 app.register_command('info', cmis.info)
+app.register_command('ls', cmis.ls)
 
 if __name__ == '__main__':
     app()
