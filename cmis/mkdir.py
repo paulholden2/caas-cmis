@@ -13,6 +13,5 @@ def mkdir_main(context, name):
     client = util.create_client(context)
     repo = client.defaultRepository
     root = repo.getRootFolder()
-    folder = root.createFolder(name)
 
-    print(folder)
+    root.createFolder(name)
