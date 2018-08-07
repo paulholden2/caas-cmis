@@ -4,6 +4,7 @@
 # Connect to a CMIS server and create a folder
 ##
 
+import string
 import util
 
 mkdir = util.create_command()
@@ -14,4 +15,13 @@ def mkdir_main(context, name):
     repo = client.defaultRepository
     root = repo.getRootFolder()
 
-    root.createFolder(name)
+    folders = string.split(name, '/')
+
+    if len(folders) == 1:
+        root.createFolder(name)
+    else:
+        parent = root
+
+        for sub in folders:
+            new_id = parent.createFolder(sub)
+            parent = repo.getFolder(new_id)
