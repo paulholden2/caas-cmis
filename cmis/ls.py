@@ -8,17 +8,17 @@ import util
 
 ls = util.create_command()
 
-@ls.main('[scope [path]]')
-def ls_main(context, scope=None, path=None):
+@ls.main('[path]')
+def ls_main(context, path=None):
     client = util.create_client(context)
 
-    if scope is None:
+    if path is None:
         for repo in client.getRepositories():
             print('Repository: ' + str(repo['repositoryName']) + ' (' + str(repo['repositoryId']) + ')')
 
         return
 
-    repo = client.getRepository(scope)
+    repo = client.defaultRepository
     root = repo.getRootFolder()
 
     # Something is broken with the atompub binding, this corrects
