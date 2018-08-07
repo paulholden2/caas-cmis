@@ -16,6 +16,9 @@ def info(context, entity=None):
     if entity is None:
         for k, v in repo.info.items():
             print('%s = %s' % (k, v))
+
+        for k, v in repo.getCapabilities().iteritems():
+            print('%s = %s' % (k, v))
     else:
         obj = repo.getObjectByPath('/' + entity)
 
