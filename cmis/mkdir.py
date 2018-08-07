@@ -37,7 +37,7 @@ def mkdir_noexcl(context, name):
 
             parent = repo.getFolder(new_id)
 
-def mkdir_nop(context, name):
+def mkdir_excl(context, name):
     client = util.create_client(context)
     repo = client.defaultRepository
     root = repo.getRootFolder()
@@ -58,7 +58,7 @@ def mkdir(context, name):
     if 'p' in context:
         return mkdir_noexcl(context, name)
     else:
-        return mkdir_nop(context, name)
+        return mkdir_excl(context, name)
 
 @mkdir_cmd.option('-p')
 def mkdir_opt_p(context, p=True):
