@@ -8,6 +8,7 @@ app = Argvard()
 
 # Register CMIS commands
 app.register_command('chmod', cmis.chmod_cmd)
+app.register_command('deliver', cmis.deliver_cmd)
 app.register_command('info', cmis.info_cmd)
 app.register_command('ls', cmis.ls_cmd)
 app.register_command('mkdir', cmis.mkdir_cmd)

@@ -1,4 +1,5 @@
 from chmod import chmod_cmd
+from deliver import deliver_cmd
 from info import info_cmd
 from ls import ls_cmd
 from mkdir import mkdir_cmd

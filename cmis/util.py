@@ -10,6 +10,9 @@ from cmislib.browser.binding import BrowserBinding
 
 # Create a CMIS client
 def create_client(context):
+    if 'client' in context:
+        return context['client']
+
     # Default to looking at .caas.yml in working dir
     stream = file(context.get('config', '.caas.yml'), 'r')
     cfg = yaml.load(stream)

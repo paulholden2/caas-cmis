@@ -15,27 +15,31 @@ def mkdir_noexcl(context, name):
     client = util.create_client(context)
     repo = client.defaultRepository
     root = repo.getRootFolder()
-
-    folders = string.split(name, '/')
+    path = util.sanitize_path(name)
+    folders = string.split(path, '/')[1:]
 
     if len(folders) == 1:
         try:
-            root.createFolder(name)
+            new_id = root.createFolder(path)
+
+            return repo.getFolder(new_id)
         except UpdateConflictException:
-            pass
+            return repo.getObjectByPath(path)
     else:
         parent = root
-        path = ''
+        sub_path = ''
 
         for sub in folders:
-            path = path + '/' + sub
+            sub_path = sub_path + '/' + sub
 
             try:
                 new_id = parent.createFolder(sub)
             except UpdateConflictException:
-                new_id = repo.getObjectByPath(path)
+                new_id = repo.getObjectByPath(sub_path)
 
             parent = repo.getFolder(new_id)
+
+        return parent
 
 def mkdir_excl(context, name):
     client = util.create_client(context)
