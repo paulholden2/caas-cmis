@@ -18,19 +18,16 @@ def ls(context, path=None):
 
         return
 
+    path = util.sanitize_path(path)
     repo = client.defaultRepository
-    root = repo.getRootFolder()
 
-    # Something is broken with the atompub binding, this corrects
-    # a bad variable in the CmisObject
-    repo._cmisClient = client
-    root._cmisClient = client
+    if path == '/':
+        root = repo.getRootFolder()
 
-    if path is None:
         for child in root.getChildren().getResults():
             print(child.getName())
     else:
-        obj = repo.getObjectByPath('/' + path)
+        obj = repo.getObjectByPath(path)
 
         for child in obj.getChildren().getResults():
             print(child.getName())

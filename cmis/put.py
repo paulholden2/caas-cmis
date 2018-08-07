@@ -9,13 +9,12 @@ import util
 
 put_cmd = util.create_command()
 
-@put_cmd.main('local [remote] [type_id]')
-def put(context, local, remote='', type_id='cmis:document'):
+@put_cmd.main('local [path] [type_id]')
+def put(context, local, path='', type_id='cmis:document'):
     client = util.create_client(context)
     repo = client.defaultRepository
 
-    remote = '/' + remote
-    folder = repo.getObjectByPath(remote)
+    folder = repo.getObjectByPath(util.sanitize_path(path))
 
     doc = open(local, 'rb')
     props = {
@@ -26,4 +25,4 @@ def put(context, local, remote='', type_id='cmis:document'):
 
     doc.close()
 
-    print(local + ' ==> ' + remote)
+    print(local + ' ==> ' + path)

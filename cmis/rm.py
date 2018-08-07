@@ -12,6 +12,6 @@ rm_cmd = util.create_command()
 def rm(context, path):
     client = util.create_client(context)
     repo = client.defaultRepository
-    obj = repo.getObjectByPath('/' + path)
+    obj = repo.getObjectByPath(util.sanitize_path(path))
 
     obj.delete()

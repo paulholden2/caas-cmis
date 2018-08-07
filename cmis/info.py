@@ -8,19 +8,19 @@ import util
 
 info_cmd = util.create_command()
 
-@info_cmd.main('[entity]')
-def info(context, entity=None):
+@info_cmd.main('[path]')
+def info(context, path=None):
     client = util.create_client(context)
     repo = client.defaultRepository
 
-    if entity is None:
+    if path is None:
         for k, v in repo.info.items():
             print('%s = %s' % (k, v))
 
         for k, v in repo.getCapabilities().iteritems():
             print('%s = %s' % (k, v))
     else:
-        obj = repo.getObjectByPath('/' + entity)
+        obj = repo.getObjectByPath(util.sanitize_path(path))
 
         for k, v in obj.getProperties().iteritems():
             print('%s = %s' % (k, v))

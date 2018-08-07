@@ -72,3 +72,9 @@ def create_command():
     cmd.options['--binding'].description = 'The API binding to use. Supported values: atompub, browser'
 
     return cmd
+
+def sanitize_path(path):
+    if not path.startswith('/'):
+        path = '/' + path
+
+    return path

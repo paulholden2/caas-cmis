@@ -14,8 +14,8 @@ chmod_cmd = util.create_command()
 def chmod_opt_d(context, d=False):
     context['d'] = d
 
-@chmod_cmd.main('access entity principal')
-def chmod(context, access, entity, principal):
+@chmod_cmd.main('access path principal')
+def chmod(context, access, path, principal):
     res = re.match('\A(-|r|w|rw|wr|a)\Z', access)
 
     if not res:
@@ -38,11 +38,11 @@ def chmod(context, access, entity, principal):
 
     client = util.create_client(context)
     repo = client.defaultRepository
-    ent = repo.getObjectByPath('/' + entity)
-    acl = ent.getACL()
+    obj = repo.getObjectByPath(util.sanitize_path(path))
+    acl = obj.getACL()
 
     acl.removeEntry(principal)
     if acc is not None:
         acl.addEntry(principal, acc, direct)
 
-    ent.applyACL(acl)
+    obj.applyACL(acl)
