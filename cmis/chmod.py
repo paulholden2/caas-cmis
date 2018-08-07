@@ -10,6 +10,10 @@ import cmislib
 
 chmod_cmd = util.create_command()
 
+@chmod_cmd.option('-d')
+def chmod_opt_d(context, d=False):
+    context['d'] = d
+
 @chmod_cmd.main('access entity principal')
 def chmod(context, access, entity, principal):
     res = re.match('\A(-|r|w|rw|wr|a)\Z', access)
@@ -27,6 +31,11 @@ def chmod(context, access, entity, principal):
     else:
         acc = None
 
+    if 'd' in context:
+        direct = 'true'
+    else:
+        direct = 'false'
+
     client = util.create_client(context)
     repo = client.defaultRepository
     ent = repo.getObjectByPath('/' + entity)
@@ -34,6 +43,6 @@ def chmod(context, access, entity, principal):
 
     acl.removeEntry(principal)
     if acc is not None:
-        acl.addEntry(principal, acc, 'true')
+        acl.addEntry(principal, acc, direct)
 
     ent.applyACL(acl)
