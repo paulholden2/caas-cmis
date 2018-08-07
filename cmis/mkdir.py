@@ -1,7 +1,7 @@
 ##
-# ls
+# mkdir
 #
-# Connect to a CMIS server and create a folder
+# Connect to a CMIS server and create a folder or nested folders
 ##
 
 import string
