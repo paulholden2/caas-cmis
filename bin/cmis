@@ -10,6 +10,7 @@ app = Argvard()
 app.register_command('info', cmis.info)
 app.register_command('ls', cmis.ls)
 app.register_command('mkdir', cmis.mkdir)
+app.register_command('put', cmis.put)
 
 if __name__ == '__main__':
     app()
