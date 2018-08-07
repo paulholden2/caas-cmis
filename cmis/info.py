@@ -8,10 +8,16 @@ import util
 
 info = util.create_command()
 
-@info.main()
-def info_main(context):
+@info.main('[entity]')
+def info_main(context, entity=None):
     client = util.create_client(context)
     repo = client.defaultRepository
 
-    for k, v in repo.info.items():
-        print '%s:%s' % (k, v)
+    if entity is None:
+        for k, v in repo.info.items():
+            print '%s:%s' % (k, v)
+    else:
+        obj = repo.getObjectByPath('/' + entity)
+
+        for k, v in obj.getProperties().iteritems():
+            print('%s = %s' % (k, v))
