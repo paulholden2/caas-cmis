@@ -12,28 +12,28 @@ chmod = util.create_command()
 
 @chmod.main('access entity principal')
 def chmod_main(context, access, entity, principal):
-    res = re.match('\A([\-\+])(r|w|rw|wr|a)\Z', access)
+    res = re.match('\A(-|r|w|rw|wr|a)\Z', access)
 
     if not res:
         raise ValueError('Invalid access identifier: ' + access)
 
-    if res.group(1) == '+':
-        allow = 'true'
-    else:
-        allow = 'false'
-
-    s = res.group(2)
+    s = res.group(1)
     if 'a' in s:
-        a = 'cmis:all'
+        acc = 'cmis:all'
     elif 'w' in s:
-        a = 'cmis:write'
+        acc = 'cmis:write'
     elif 'r' in s:
-        a = 'cmis:read'
+        acc = 'cmis:read'
+    else:
+        acc = None
 
     client = util.create_client(context)
     repo = client.defaultRepository
     ent = repo.getObjectByPath('/' + entity)
-
     acl = ent.getACL()
-    acl.addEntry(principal, a, allow)
+
+    acl.removeEntry(principal)
+    if acc is not None:
+        acl.addEntry(principal, acc, 'true')
+
     ent.applyACL(acl)
