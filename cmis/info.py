@@ -6,10 +6,10 @@
 
 import util
 
-info = util.create_command()
+info_cmd = util.create_command()
 
-@info.main('[entity]')
-def info_main(context, entity=None):
+@info_cmd.main('[entity]')
+def info(context, entity=None):
     client = util.create_client(context)
     repo = client.defaultRepository
 

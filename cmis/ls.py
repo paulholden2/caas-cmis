@@ -6,10 +6,10 @@
 
 import util
 
-ls = util.create_command()
+ls_cmd = util.create_command()
 
-@ls.main('[path]')
-def ls_main(context, path=None):
+@ls_cmd.main('[path]')
+def ls(context, path=None):
     client = util.create_client(context)
 
     if path is None:

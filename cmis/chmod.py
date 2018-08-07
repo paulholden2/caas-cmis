@@ -8,10 +8,10 @@ import re
 import util
 import cmislib
 
-chmod = util.create_command()
+chmod_cmd = util.create_command()
 
-@chmod.main('access entity principal')
-def chmod_main(context, access, entity, principal):
+@chmod_cmd.main('access entity principal')
+def chmod(context, access, entity, principal):
     res = re.match('\A(-|r|w|rw|wr|a)\Z', access)
 
     if not res:

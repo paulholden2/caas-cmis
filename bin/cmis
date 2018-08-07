@@ -7,11 +7,11 @@ from argvard import Argvard
 app = Argvard()
 
 # Register CMIS commands
-app.register_command('chmod', cmis.chmod)
-app.register_command('info', cmis.info)
-app.register_command('ls', cmis.ls)
-app.register_command('mkdir', cmis.mkdir)
-app.register_command('put', cmis.put)
+app.register_command('chmod', cmis.chmod_cmd)
+app.register_command('info', cmis.info_cmd)
+app.register_command('ls', cmis.ls_cmd)
+app.register_command('mkdir', cmis.mkdir_cmd)
+app.register_command('put', cmis.put_cmd)
 
 if __name__ == '__main__':
     app()

@@ -7,10 +7,10 @@
 import os
 import util
 
-put = util.create_command()
+put_cmd = util.create_command()
 
-@put.main('local [remote] [type_id]')
-def put_main(context, local, remote='', type_id='cmis:document'):
+@put_cmd.main('local [remote] [type_id]')
+def put(context, local, remote='', type_id='cmis:document'):
     client = util.create_client(context)
     repo = client.defaultRepository
 

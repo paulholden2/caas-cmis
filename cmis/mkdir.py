@@ -9,7 +9,7 @@ from cmislib.exceptions import ContentAlreadyExistsException, UpdateConflictExce
 import string
 import util
 
-mkdir = util.create_command()
+mkdir_cmd = util.create_command()
 
 def mkdir_noexcl(context, name):
     client = util.create_client(context)
@@ -53,13 +53,13 @@ def mkdir_nop(context, name):
             new_id = parent.createFolder(sub)
             parent = repo.getFolder(new_id)
 
-@mkdir.main('name')
-def mkdir_main(context, name):
+@mkdir_cmd.main('name')
+def mkdir(context, name):
     if 'p' in context:
         return mkdir_noexcl(context, name)
     else:
         return mkdir_nop(context, name)
 
-@mkdir.option('-p')
-def mkdir_p(context, p=True):
+@mkdir_cmd.option('-p')
+def mkdir_opt_p(context, p=True):
     context['p'] = p
