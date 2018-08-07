@@ -7,6 +7,7 @@ from argvard import Argvard
 app = Argvard()
 
 # Register CMIS commands
+app.register_command('chmod', cmis.chmod)
 app.register_command('info', cmis.info)
 app.register_command('ls', cmis.ls)
 app.register_command('mkdir', cmis.mkdir)

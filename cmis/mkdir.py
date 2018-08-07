@@ -11,7 +11,7 @@ import util
 
 mkdir = util.create_command()
 
-def mkdir_p(context, name):
+def mkdir_noexcl(context, name):
     client = util.create_client(context)
     repo = client.defaultRepository
     root = repo.getRootFolder()
@@ -56,7 +56,7 @@ def mkdir_nop(context, name):
 @mkdir.main('name')
 def mkdir_main(context, name):
     if 'p' in context:
-        return mkdir_p(context, name)
+        return mkdir_noexcl(context, name)
     else:
         return mkdir_nop(context, name)
 

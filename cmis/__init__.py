@@ -1,3 +1,4 @@
+from chmod import chmod
 from info import info
 from ls import ls
 from mkdir import mkdir
