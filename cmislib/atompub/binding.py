@@ -143,7 +143,7 @@ class AtomPubBinding(Binding):
         if len(self.extArgs) > 0:
             kwargs.update(self.extArgs)
 
-        resp, content = Rest().delete(url,
+        resp, content = Rest(ssl=self.ssl).delete(url,
                                       username=username,
                                       password=password,
                                       **kwargs)
@@ -203,7 +203,7 @@ class AtomPubBinding(Binding):
         if len(self.extArgs) > 0:
             kwargs.update(self.extArgs)
 
-        resp, content = Rest().put(url,
+        resp, content = Rest(ssl=self.ssl).put(url,
                                    payload,
                                    contentType,
                                    username=username,
