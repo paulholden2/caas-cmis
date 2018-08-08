@@ -28,6 +28,7 @@
 ##
 
 import os
+import sys
 import glob
 import csv
 import util
