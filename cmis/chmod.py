@@ -11,7 +11,7 @@ import cmislib
 chmod_cmd = util.create_command()
 
 @chmod_cmd.option('-d')
-def chmod_opt_d(context, d=False):
+def chmod_opt_d(context, d=True):
     context['d'] = d
 
 @chmod_cmd.main('access path principal')
