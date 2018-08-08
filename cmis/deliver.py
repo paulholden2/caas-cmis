@@ -112,7 +112,11 @@ def deliver_folder(context, folder):
         else:
             dest_dir = directories[dest]
 
-        props = { k : entry[k] for k in entry if entry[k] != '' }
+        props = {}
+
+        for k, v in entry.iteritems():
+            if v != '':
+                props[k] = v
 
         source_file = open(os.path.join(folder, source), 'rb')
         dest_dir.createDocument(source, contentFile=source_file, properties=props)
