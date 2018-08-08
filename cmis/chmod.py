@@ -32,9 +32,9 @@ def chmod(context, access, path, principal):
         acc = None
 
     if 'd' in context:
-        direct = 'true'
+        direct = True
     else:
-        direct = 'false'
+        direct = False
 
     client = util.create_client(context)
     repo = client.defaultRepository
