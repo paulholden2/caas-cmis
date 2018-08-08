@@ -100,7 +100,11 @@ def deliver_folder(context, folder):
         type_id = entry.pop('cmis:objectTypeId')
 
         if dest not in directories:
+            # Apply access for mkdir call
+            context['a'] = 'a'
             dest_dir = cmis.mkdir.mkdir_noexcl(context, dest)
+            context.pop('a', None)
+
             directories[dest] = dest_dir
 
             print('mkdir: %s' % dest)
