@@ -8,8 +8,13 @@ import os
 from cmislib.exceptions import ContentAlreadyExistsException, UpdateConflictException
 import string
 import util
+from chmod import chmod
 
 mkdir_cmd = util.create_command()
+
+@mkdir_cmd.option('-a access')
+def mkdir_opt_a(context, access='r'):
+    context['a'] = access
 
 def mkdir_noexcl(context, name):
     client = util.create_client(context)
@@ -21,6 +26,12 @@ def mkdir_noexcl(context, name):
     if len(folders) == 1:
         try:
             new_id = root.createFolder(path)
+
+            if 'a' in context:
+                # Pop access option from context for the chmod call
+                access = context.pop('a')
+                chmod(context, access, path, context['username'])
+                context['a'] = access
 
             return repo.getFolder(new_id)
         except UpdateConflictException:
@@ -36,6 +47,12 @@ def mkdir_noexcl(context, name):
                 new_id = parent.createFolder(sub)
             except UpdateConflictException:
                 new_id = repo.getObjectByPath(sub_path)
+
+            if 'a' in context:
+                # Pop access option from context for the chmod call
+                access = context.pop('a')
+                chmod(context, access, sub_path, context['username'])
+                context['a'] = access
 
             parent = repo.getFolder(new_id)
 

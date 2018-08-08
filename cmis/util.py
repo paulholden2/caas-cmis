@@ -23,6 +23,10 @@ def create_client(context):
     password = context.get('password', cfg['password'])
     binding = context.get('binding', cfg.get('binding', 'atompub'))
 
+    context['hostname'] = hostname
+    context['username'] = username
+    context['binding'] = binding
+
     if binding == 'atompub':
         adapter = AtomPubBinding
     elif binding == 'browser':
