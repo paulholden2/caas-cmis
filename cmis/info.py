@@ -19,6 +19,8 @@ def info(context, path=None):
 
         for k, v in repo.getCapabilities().iteritems():
             print('%s = %s' % (k, v))
+
+        print('propagation = %s' % repo.getPropagation())
     else:
         obj = repo.getObjectByPath(util.sanitize_path(path))
 
