@@ -97,7 +97,6 @@ def deliver_folder(context, folder):
     for entry in data:
         source = entry.pop('caas:source')
         dest = entry.pop('caas:destination')
-        type_id = entry.pop('cmis:objectTypeId')
 
         if dest not in directories:
             # Apply access for mkdir call
