@@ -112,8 +112,10 @@ def deliver_folder(context, folder):
         else:
             dest_dir = directories[dest]
 
+        props = { k : entry[k] for k in entry if entry[k] != '' }
+
         source_file = open(os.path.join(folder, source), 'rb')
-        dest_dir.createDocument(source, contentFile=source_file, properties=entry)
+        dest_dir.createDocument(source, contentFile=source_file, properties=props)
         source_file.close()
 
         print('upload: %s => %s' % (source, dest))
