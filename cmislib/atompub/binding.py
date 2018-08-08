@@ -3611,27 +3611,25 @@ class AtomPubACL(ACL):
         aclEl.setAttribute('xmlns:cmis', CMIS_NS)
         if self.getEntries():
             for ace in self.getEntries().values():
-                # only want direct permissions
-                if ace.direct:
-                    permEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:permission')
-                    # principalId
-                    prinEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:principal')
-                    prinIdEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:principalId')
-                    prinIdElText = xmlDoc.createTextNode(ace.principalId)
-                    prinIdEl.appendChild(prinIdElText)
-                    prinEl.appendChild(prinIdEl)
-                    permEl.appendChild(prinEl)
-                    # permissions
-                    for perm in ace.permissions:
-                        permItemEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:permission')
-                        permItemElText = xmlDoc.createTextNode(perm)
-                        permItemEl.appendChild(permItemElText)
-                        permEl.appendChild(permItemEl)
-                    directEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:direct')
-                    directElText = xmlDoc.createTextNode(toCMISValue(ace.direct))
-                    directEl.appendChild(directElText)
-                    permEl.appendChild(directEl)
-                    aclEl.appendChild(permEl)
+                permEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:permission')
+                # principalId
+                prinEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:principal')
+                prinIdEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:principalId')
+                prinIdElText = xmlDoc.createTextNode(ace.principalId)
+                prinIdEl.appendChild(prinIdElText)
+                prinEl.appendChild(prinIdEl)
+                permEl.appendChild(prinEl)
+                # permissions
+                for perm in ace.permissions:
+                    permItemEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:permission')
+                    permItemElText = xmlDoc.createTextNode(perm)
+                    permItemEl.appendChild(permItemElText)
+                    permEl.appendChild(permItemEl)
+                directEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:direct')
+                directElText = xmlDoc.createTextNode(toCMISValue(ace.direct))
+                directEl.appendChild(directElText)
+                permEl.appendChild(directEl)
+                aclEl.appendChild(permEl)
         else:
             permEl = xmlDoc.createElementNS(CMIS_NS, 'cmis:permission')
             aclEl.appendChild(permEl)
