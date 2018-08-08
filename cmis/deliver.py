@@ -113,7 +113,7 @@ def deliver_folder(context, folder):
             dest_dir = directories[dest]
 
         source_file = open(os.path.join(folder, source), 'rb')
-        dest_dir.createDocument(source, contentFile=source_file, properties={'cmis:objectTypeId':'cmis:document'})
+        dest_dir.createDocument(source, contentFile=source_file, properties=entry)
         source_file.close()
 
         print('upload: %s => %s' % (source, dest))
