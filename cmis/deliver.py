@@ -107,6 +107,7 @@ def deliver_folder(context, folder):
             directories[dest] = dest_dir
 
             print('mkdir: %s' % dest)
+            sys.stdout.flush()
         else:
             dest_dir = directories[dest]
 
@@ -115,6 +116,7 @@ def deliver_folder(context, folder):
         source_file.close()
 
         print('upload: %s => %s' % (source, dest))
+        sys.stdout.flush()
 
 @deliver_cmd.option('-m')
 def deliver_opt_m(context, m=True):
