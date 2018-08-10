@@ -88,9 +88,6 @@ def deliver_folder(context, folder):
     data = get_load(load_path)
 
     client = util.create_client(context)
-    # So we don't create new clients when running commands
-    context['client'] = client
-
     repo = client.defaultRepository
 
     directories = {}

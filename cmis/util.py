@@ -41,6 +41,8 @@ def create_client(context):
     else:
         adapter.ssl = False
 
+    context['client'] = client
+
     return client
 
 # Create an Argvard command with standard options
