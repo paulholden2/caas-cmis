@@ -66,13 +66,15 @@ def mkdir_excl(context, name):
     folders = string.split(path, '/')[1:]
 
     if len(folders) == 1:
-        root.createFolder(folders[0])
+        new_id = root.createFolder(folders[0])
 
         if 'a' in context:
             # Pop access option from context for the chmod call
             access = context.pop('a')
             chmod(context, access, path, context['username'])
             context['a'] = access
+
+        return repo.getFolder(new_id)
     else:
         parent = root
         sub_path = ''
@@ -89,6 +91,8 @@ def mkdir_excl(context, name):
                 context['a'] = access
 
             parent = repo.getFolder(new_id)
+
+        return parent
 
 @mkdir_cmd.main('name')
 def mkdir(context, name):
