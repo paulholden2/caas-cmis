@@ -99,12 +99,14 @@ def deliver_folder(context, folder):
         source = entry.pop('caas:source')
         dest = entry.pop('caas:destination')
 
+        # If we haven't already created/retrieved a folder
         if dest not in directories:
             # Apply access for mkdir call
             context['a'] = 'a'
             dest_dir = cmis.mkdir.mkdir_noexcl(context, dest)
             context.pop('a', None)
 
+            # Cache created/retrieved folder
             directories[dest] = dest_dir
 
             print('mkdir: %s' % dest)
