@@ -9,6 +9,8 @@ import util
 
 put_cmd = util.create_command()
 
+put_cmd.description = 'Upload a file to a folder within a repository.'
+
 @put_cmd.main('local [path] [type_id]')
 def put(context, local, path='', type_id='cmis:document'):
     client = util.create_client(context)

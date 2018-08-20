@@ -12,6 +12,8 @@ from chmod import chmod
 
 mkdir_cmd = util.create_command()
 
+mkdir_cmd.description = 'Create new folders in a repository.'
+
 @mkdir_cmd.option('-a access')
 def mkdir_opt_a(context, access='r'):
     context['a'] = access

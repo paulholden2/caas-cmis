@@ -8,6 +8,8 @@ import util
 
 ls_cmd = util.create_command()
 
+ls_cmd.description = 'List repositories on a server or files and folders in a repository.'
+
 @ls_cmd.main('[path]')
 def ls(context, path=None):
     client = util.create_client(context)

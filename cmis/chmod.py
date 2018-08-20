@@ -10,6 +10,8 @@ import cmislib
 
 chmod_cmd = util.create_command()
 
+chmod_cmd.description = 'Modify ACLs for a folder object.'
+
 @chmod_cmd.option('-d')
 def chmod_opt_d(context, d=True):
     context['d'] = d

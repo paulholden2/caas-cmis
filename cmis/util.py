@@ -75,6 +75,7 @@ def create_command():
         context['binding'] = binding
 
     # Add descriptions for standard options
+    cmd.options['--config'].description = 'Specify a configuration file to load (YAML or JSON only)'
     cmd.options['--hostname'].description = 'Hostname of the CMIS service endpoint'
     cmd.options['--username'].description = 'Username to connect to the CMIS server as'
     cmd.options['--password'].description = 'Password to authenticate with'

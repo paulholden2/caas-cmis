@@ -8,6 +8,8 @@ import util
 
 info_cmd = util.create_command()
 
+info_cmd.description = 'Get some basic information about the CMIS service or repositories.'
+
 @info_cmd.main('[path]')
 def info(context, path=None):
     client = util.create_client(context)

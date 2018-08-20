@@ -36,13 +36,35 @@ import cmis
 
 deliver_cmd = util.create_command()
 
+deliver_cmd.description = '''\
+Upload a batch of files and properties to the repository. A delivery consists
+of one or more files to upload and a load list in CSV format named
+"load.csv".
+
+An example of a CSV load list:
+
+ 1  "caas:source","caas:destination","cmis:objectTypeId","Company Name"
+ 2  "Contract.pdf","/Contracts/ACME, Inc","cmis:document","ACME, Inc"
+
+The caas:source, caas:destination, and cmis:objectTypeId columns are
+required. The first two indicate the source file path and destination folder
+path in the CMIS repository respectively. The last indiciates what type of
+object is being uploaded. See CMIS object types for more info.
+
+The fourth and any additional columns describe properties for the object.
+If the properties don't exist for the designated object type, the delivery
+will fail. Empty property values are excluded from the uploaded document.
+'''
+
 def get_load(path):
+    # List of required columns in their expected order
     required = [
         'caas:source',
         'caas:destination',
         'cmis:objectTypeId'
     ]
 
+    # Data rows array
     data = []
 
     with open(path, 'r') as csv_file:
@@ -54,9 +76,11 @@ def get_load(path):
             if key not in headers:
                 raise KeyError('Required column missing from load: %s' % key)
 
+        # Row index, for reporting errors
         idx = 1
 
         for row in reader:
+            # Assert the number of columns matches the number of values
             assert(len(row) == len(headers))
 
             data_row = {}
@@ -90,8 +114,12 @@ def deliver_folder(context, folder):
     client = util.create_client(context)
     repo = client.defaultRepository
 
+    # Dictionary cache of created/retrieved directories from the repository.
+    #  - Key: folder path within repository
+    #  - Value: CMIS folder object
     directories = {}
 
+    # For each entry in the load list
     for entry in data:
         source = entry.pop('caas:source')
         dest = entry.pop('caas:destination')
@@ -109,15 +137,16 @@ def deliver_folder(context, folder):
         else:
             dest_dir = directories[dest]
 
+        # Build properties dictionary
         props = {}
-
         for k, v in entry.iteritems():
+            # Don't set empty properties (causes a CMIS error)
             if v != '':
                 props[k] = v
 
-        source_file = open(os.path.join(folder, source), 'rb')
-        dest_dir.createDocument(source, contentFile=source_file, properties=props)
-        source_file.close()
+        # Upload the file
+        with open(os.path.join(folder, source), 'rb') as source_file:
+            dest_dir.createDocument(source, contentFile=source_file, properties=props)
 
         print('upload: %s => %s' % (source, dest))
         sys.stdout.flush()

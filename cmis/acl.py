@@ -8,6 +8,8 @@ import util
 
 acl_cmd = util.create_command()
 
+acl_cmd.description = 'List ACLs on a folder object by path'
+
 @acl_cmd.main('path')
 def acl(context, path):
     client = util.create_client(context)

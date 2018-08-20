@@ -6,6 +6,8 @@ from argvard import Argvard
 # Create Argvard app
 app = Argvard()
 
+app.description = 'A suite of tools for interacting with a CMIS-compliant repository'
+
 # Register CMIS commands
 app.register_command('acl', cmis.acl_cmd)
 app.register_command('chmod', cmis.chmod_cmd)
