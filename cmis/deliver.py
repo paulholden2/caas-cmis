@@ -13,7 +13,7 @@
 #  1  "caas:source","caas:destination","cmis:objectTypeId","Company Name"
 #  2  "ACME Contract.pdf","/Contracts/ACME, Inc/Contracts","cmis:document","ACME, Inc"
 #
-# The caas:source, caas:destination, and cmis:objectTypeId columsn are
+# The caas:source, caas:destination, and cmis:objectTypeId columns are
 # required. The first two indicate the source file path and destination
 # folder path in the CMIS repository respectively. The last indiciates
 # what type of object is being uploaded. See CMIS object types for more info.
@@ -99,9 +99,7 @@ def deliver_folder(context, folder):
         # If we haven't already created/retrieved a folder
         if dest not in directories:
             # Apply access for mkdir call
-            context['a'] = 'a'
             dest_dir = cmis.mkdir.mkdir_noexcl(context, dest)
-            context.pop('a', None)
 
             # Cache created/retrieved folder
             directories[dest] = dest_dir
