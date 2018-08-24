@@ -141,7 +141,16 @@ def deliver_folder(context, folder):
         props = {}
         for k, v in entry.iteritems():
             # Don't set empty properties (causes a CMIS error)
-            if v != '':
+            if v == '':
+                continue
+
+            if '|' in v:
+                props[k] = []
+
+                for i in v.split('|'):
+                    if i is not None and i != '':
+                        props[k].append(i)
+            else:
                 props[k] = v
 
         # Upload the file
