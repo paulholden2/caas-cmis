@@ -33,6 +33,7 @@ import glob
 import csv
 import util
 import cmis
+from cmislib.exceptions import UpdateConflictException
 
 deliver_cmd = util.create_command()
 
@@ -124,18 +125,30 @@ def deliver_folder(context, folder):
         source = entry.pop('caas:source')
         dest = entry.pop('caas:destination')
 
-        # If we haven't already created/retrieved a folder
-        if dest not in directories:
-            # Apply access for mkdir call
-            dest_dir = cmis.mkdir.mkdir_noexcl(context, dest)
+        pathlist = []
+        dir = dest
+        while dir != '/' and dir != '':
+            pathlist.insert(0, dir)
+            dir = os.path.dirname(dir)
 
-            # Cache created/retrieved folder
-            directories[dest] = dest_dir
+        for path in pathlist:
+            if path not in directories:
+                parent_path = os.path.dirname(path)
 
-            print('mkdir: %s' % dest)
-            sys.stdout.flush()
-        else:
-            dest_dir = directories[dest]
+                if parent_path in directories:
+                    parent = directories[parent_path]
+                else:
+                    parent = repo.getRootFolder()
+
+                try:
+                    directories[path] = parent.createFolder(os.path.basename(path))
+                except UpdateConflictException:
+                    directories[path] = repo.getObjectByPath(util.sanitize_path(path))
+
+        print('mkdir: %s' % dest)
+        sys.stdout.flush()
+
+        dest_dir = directories[dest]
 
         # Build properties dictionary
         props = {}
