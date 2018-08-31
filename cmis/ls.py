@@ -10,6 +10,10 @@ ls_cmd = util.create_command()
 
 ls_cmd.description = 'List repositories on a server or files and folders in a repository.'
 
+@ls_cmd.option('-r')
+def ls_opt_r(context, r=None):
+    context['r'] = r
+
 @ls_cmd.main('[path]')
 def ls(context, path=None):
     client = util.create_client(context)
@@ -23,7 +27,7 @@ def ls(context, path=None):
     path = util.sanitize_path(path)
     repo = client.defaultRepository
 
-    if path == '/':
+    if path == '/' or context['r'] is not None:
         root = repo.getRootFolder()
 
         for child in root.getChildren().getResults():
