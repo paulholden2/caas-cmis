@@ -120,10 +120,21 @@ def deliver_folder(context, folder):
     #  - Value: CMIS folder object
     directories = {}
 
+    # Dictionary cache of CMIS object types. Used to determine what type
+    # to convert properties in the load list to (datetime, string, integer,
+    # etc.)
+    object_types = {}
+
     # For each entry in the load list
     for entry in data:
         source = entry.pop('caas:source')
         dest = entry.pop('caas:destination')
+        type = entry['cmis:objectTypeId']
+
+        if type not in object_types:
+            object_types[type] = repo.getTypeDefinition(type)
+
+        type_definition = object_types[type]
 
         pathlist = []
         dir = dest
@@ -162,9 +173,9 @@ def deliver_folder(context, folder):
 
                 for i in v.split('|'):
                     if i is not None and i != '':
-                        props[k].append(i)
+                        props[k].append(util.strtodata(i))
             else:
-                props[k] = v
+                props[k] = util.strtodata(v)
 
         # Upload the file
         with open(os.path.join(folder, source), 'rb') as source_file:

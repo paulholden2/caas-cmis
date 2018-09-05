@@ -88,3 +88,20 @@ def sanitize_path(path):
         path = '/' + path
 
     return path
+
+def strtodata(str, type):
+    if type == 'string' or type == 'id' or type == 'uri' or type == 'html':
+        return str
+    elif type == 'datetime':
+        return datetime.strptime(str, '%m/%d/%Y')
+    elif type == 'integer':
+        return int(str)
+    elif type == 'decimal':
+        return float(str)
+    elif type == 'boolean':
+        if str.lower() == 'true':
+            return True
+        else:
+            return False
+    else:
+        return None
