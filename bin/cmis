@@ -17,6 +17,7 @@ app.register_command('ls', cmis.ls_cmd)
 app.register_command('mkdir', cmis.mkdir_cmd)
 app.register_command('put', cmis.put_cmd)
 app.register_command('rm', cmis.rm_cmd)
+app.register_command('type', cmis.type_cmd)
 
 if __name__ == '__main__':
     app()

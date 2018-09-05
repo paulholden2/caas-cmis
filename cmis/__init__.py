@@ -6,3 +6,4 @@ from ls import ls_cmd
 from mkdir import mkdir_cmd
 from put import put_cmd
 from rm import rm_cmd
+from type import type_cmd
