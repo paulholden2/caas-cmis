@@ -34,7 +34,6 @@ import csv
 import util
 import cmis
 from cmislib.exceptions import UpdateConflictException
-from datetime import datetime
 
 deliver_cmd = util.create_command()
 
