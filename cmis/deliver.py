@@ -129,12 +129,12 @@ def deliver_folder(context, folder):
     for entry in data:
         source = entry.pop('caas:source')
         dest = entry.pop('caas:destination')
-        type = entry['cmis:objectTypeId']
+        type_id = entry['cmis:objectTypeId']
 
-        if type not in object_types:
-            object_types[type] = repo.getTypeDefinition(type)
+        if type_id not in object_types:
+            object_types[type_id] = repo.getTypeDefinition(type_id)
 
-        type_definition = object_types[type]
+        type_definition = object_types[type_id]
 
         pathlist = []
         dir = dest
@@ -168,14 +168,16 @@ def deliver_folder(context, folder):
             if v == '':
                 continue
 
+            prop_type = type_definition.properties[k].propertyType
+
             if '|' in v:
                 props[k] = []
 
                 for i in v.split('|'):
                     if i is not None and i != '':
-                        props[k].append(util.strtodata(i))
+                        props[k].append(util.strtodata(i, prop_type))
             else:
-                props[k] = util.strtodata(v)
+                props[k] = util.strtodata(v, prop_type)
 
         # Upload the file
         with open(os.path.join(folder, source), 'rb') as source_file:
