@@ -181,7 +181,12 @@ def deliver_folder(context, folder):
 
         # Upload the file
         with open(os.path.join(folder, source), 'rb') as source_file:
-            dest_dir.createDocument(source, contentFile=source_file, properties=props)
+            title = source
+
+            if 'DocumentTitle' in props:
+                title = props['DocumentTitle']
+
+            dest_dir.createDocument(title, contentFile=source_file, properties=props)
 
         print('upload: %s => %s' % (source, dest))
         sys.stdout.flush()
