@@ -170,12 +170,14 @@ def deliver_folder(context, folder):
 
             prop_type = type_definition.properties[k].propertyType
 
-            if '|' in v:
+            if type_definition.properties[k].cardinality == 'multi':
                 props[k] = []
 
                 for i in v.split('|'):
                     if i is not None and i != '':
                         props[k].append(util.strtodata(i, prop_type))
+
+                props[k] = list(set(props[k]))
             else:
                 props[k] = util.strtodata(v, prop_type)
 

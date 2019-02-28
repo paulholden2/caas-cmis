@@ -23,4 +23,4 @@ def _type(context, type_id=None):
         definition = repo.getTypeDefinition(type_id)
 
         for prop in definition.properties:
-            print('%s (%s)' % (prop, definition.properties[prop].getPropertyType()))
+            print('%s (%s %s)' % (prop, definition.properties[prop].cardinality, definition.properties[prop].getPropertyType()))
