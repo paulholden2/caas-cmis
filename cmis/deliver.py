@@ -103,10 +103,13 @@ def get_load(path):
     return data
 
 def deliver_folder(context, folder):
-    load_path = os.path.join(folder, 'load.csv')
+    if 'load' not in context:
+        context['load'] = 'load.csv'
+
+    load_path = os.path.join(folder, context['load'])
 
     if not os.path.exists(load_path):
-        print('Cannot upload %s: missing load.csv' % folder)
+        print('Cannot upload %s: missing %s' % (folder, context['load']))
 
         return
 
@@ -196,6 +199,10 @@ def deliver_folder(context, folder):
 @deliver_cmd.option('-m')
 def deliver_opt_m(context, m=True):
     context['m'] = m
+
+@deliver_cmd.option('--load load')
+def deliver_opt_load(context, load='load.csv'):
+    context['load'] = load
 
 deliver_cmd.options['-m'].description = 'Deliver modules in <directory>'
 
