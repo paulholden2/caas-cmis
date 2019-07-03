@@ -34,6 +34,7 @@ import csv
 import util
 import cmis
 from cmislib.exceptions import UpdateConflictException
+from tenacity import retry
 
 deliver_cmd = util.create_command()
 
@@ -184,17 +185,21 @@ def deliver_folder(context, folder):
             else:
                 props[k] = util.strtodata(v, prop_type)
 
-        # Upload the file
-        with open(os.path.join(folder, source), 'rb') as source_file:
-            title = source
-
-            if 'DocumentTitle' in props:
-                title = props['DocumentTitle']
-
-            dest_dir.createDocument(title, contentFile=source_file, properties=props)
+        upload_file(dest_dir, folder, source, props)
 
         print('upload: %s => %s' % (source, dest))
         sys.stdout.flush()
+
+@retry(stop=stop_after_attempt(10), wait=wait_fixed(15))
+def upload_file(dest_dir, folder, source, props):
+    # Upload the file
+    with open(os.path.join(folder, source), 'rb') as source_file:
+        title = source
+
+        if 'DocumentTitle' in props:
+            title = props['DocumentTitle']
+
+        dest_dir.createDocument(title, contentFile=source_file, properties=props)
 
 @deliver_cmd.option('-m')
 def deliver_opt_m(context, m=True):
