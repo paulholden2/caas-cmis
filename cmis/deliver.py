@@ -34,7 +34,7 @@ import csv
 import util
 import cmis
 from cmislib.exceptions import UpdateConflictException
-from tenacity import retry
+from tenacity import retry, stop_after_attempt, wait_fixed
 
 deliver_cmd = util.create_command()
 
